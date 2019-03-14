@@ -7,6 +7,7 @@ const translate = require('@k3rn31p4nic/google-translate-api')
 const language = 'bn'
 const botToken = process.env.BOT_TOKEN
 const channelId = process.env.CHANNEL_ID
+const senderChannelId = process.env.SENDER_CHANNEL_ID
 
 // take text and provided language
 const translator = async (text, lang) => {
@@ -20,9 +21,17 @@ const translator = async (text, lang) => {
 }
 // make a telegraf instance
 const bot = new Telegraf(botToken);
-// listen for every chat message and translate them
+// listen every message
+// if that message comes from sender channel/Channel1 then translate it
+// and send to Channel2 with userID/userName
+// otherwise just keep server running.
 bot.use(async ctx => {
-  const { text } = ctx.channelPost
+  const { text } = ctx.message
+  console.log(text)
+  const Id = ctx.chat.id
+  const sender = ctx.update
+  console.log(sender)
+  if (Id === Number(`-100${senderChannelId}`)) {
   const translated = await translator(text, language)
 
 // send Translated message to provided channel
@@ -31,6 +40,7 @@ bot.use(async ctx => {
   } catch (err) {
     console.log(err)
   }
+}
 })
 
 bot.launch()
