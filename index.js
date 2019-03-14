@@ -23,8 +23,7 @@ const bot = new Telegraf(BOT_TOKEN);
 // and send to Channel2 with senderName
 // otherwise just keep server running.
 bot.use(async ctx => {
-  const { Message } = ctx.message
-  console.log(Message)
+  const { Message } = ctx.channelPost
   const Id = ctx.chat.id
   const sender = ctx.chat.title
   console.log(sender)
