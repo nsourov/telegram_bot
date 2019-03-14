@@ -18,3 +18,4 @@ $ yarn
 $ node index.js
 ```
 - It will hear every message from your channel and post translated language to your provided channel.
+- You can watch a preview in this link (https://drive.google.com/file/d/1jDfHujKdINjjwtrPpHlEqCvDVyrLaYg8/view?usp=sharing)
