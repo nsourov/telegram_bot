@@ -19,7 +19,7 @@ const translator = async (text, lang) => {
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.use(async (ctx) => {
-  const { text } = ctx.channelPost; // grab message from channel1
+  const { text } = ctx.update.message; // grab message from channel1
   const translated = await translator(text, translateTo);
   try {
     // channel has to select bot as admin in order to recieve message.
