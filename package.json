@@ -26,5 +26,8 @@
   "keywords": [
     "node",
     "telegram"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^5.15.1"
+  }
 }
