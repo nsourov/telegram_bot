@@ -23,16 +23,15 @@ const bot = new Telegraf(BOT_TOKEN);
 // and send to Channel2 with senderName
 // otherwise just keep server running.
 bot.use(async ctx => {
-  const { Message } = ctx.channelPost
+  const { text } = ctx.channelPost
   const Id = ctx.chat.id
   const sender = ctx.chat.title
-  console.log(sender)
   if (Id === Number(`-100${SENDER_CHANNEL_ID}`)) {
-  const translated = await translator(Message, TARGET_LANG)
+  const translated = await translator(text, TARGET_LANG)
 
 // send Translated message to provided channel
   try {
-    await ctx.telegram.sendMessage(CHANNEL_ID, `${sender}: ${translated}`)
+    await ctx.telegram.sendMessage(Number(`-100${CHANNEL_ID}`), `${sender}: ${translated}`)
   } catch (err) {
     console.log(err)
   }
