@@ -4,10 +4,7 @@ const translate = require('@k3rn31p4nic/google-translate-api')
 
 // note: If we put language in .env file it isn't working
 
-const language = 'bn'
-const botToken = process.env.BOT_TOKEN
-const channelId = process.env.CHANNEL_ID
-const senderChannelId = process.env.SENDER_CHANNEL_ID
+const { BOT_TOKEN, CHANNEL_ID, TARGET_LANG, SENDER_CHANNEL_ID } = process.env;
 
 // take text and provided language
 const translator = async (text, lang) => {
@@ -20,23 +17,23 @@ const translator = async (text, lang) => {
   }
 }
 // make a telegraf instance
-const bot = new Telegraf(botToken);
+const bot = new Telegraf(BOT_TOKEN);
 // listen every message
 // if that message comes from sender channel/Channel1 then translate it
-// and send to Channel2 with userID/userName
+// and send to Channel2 with senderName
 // otherwise just keep server running.
 bot.use(async ctx => {
-  const { text } = ctx.message
-  console.log(text)
+  const { Message } = ctx.message
+  console.log(Message)
   const Id = ctx.chat.id
-  const sender = ctx.update
+  const sender = ctx.chat.title
   console.log(sender)
-  if (Id === Number(`-100${senderChannelId}`)) {
-  const translated = await translator(text, language)
+  if (Id === Number(`-100${SENDER_CHANNEL_ID}`)) {
+  const translated = await translator(Message, TARGET_LANG)
 
 // send Translated message to provided channel
   try {
-    await ctx.telegram.sendMessage(Number(`-100${channelId}`), translated)
+    await ctx.telegram.sendMessage(CHANNEL_ID, `${sender}: ${translated}`)
   } catch (err) {
     console.log(err)
   }
